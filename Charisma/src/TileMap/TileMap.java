@@ -144,7 +144,7 @@ public class TileMap {
 			
 			if(row >= numRows) break;
 			
-			 for(int col < colOffset; col < colOffset + numColsToDraw; col++) {
+			 for(int col = colOffset; col < colOffset + numColsToDraw; col++) {
 				 
 				 if(col >= numCols) break;
 				 
@@ -154,7 +154,7 @@ public class TileMap {
 				 int r = rc/ numTilesAcross;
 				 int c = rc % numTilesAcross;
 				 
-				 g.drawImages(tiles)[r][c].getImage(), (int)x + col * tileSize, (int)y + row * tileSize, null);			 }
+				 g.drawImage(tiles[r][c].getImage(), (int)x + col * tileSize, (int)y + row * tileSize, null);			 }
 			
 		}
 	}

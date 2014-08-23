@@ -21,6 +21,7 @@ public class MenuState extends GameState	{
 	
 	private Font font;
 	
+	
 	public MenuState(GameStateManager gsm) {
 		this.gsm = gsm;
 		
@@ -72,7 +73,7 @@ public class MenuState extends GameState	{
 	
 	private void select() {
 		if(currentChoice == 0) {
-//			gsm.setState(GameStateManager(Village));
+			gsm.setState(GameStateManager.VILLAGE);
 		}
 		
 		if (currentChoice == 1) {

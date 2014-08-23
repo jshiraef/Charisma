@@ -18,9 +18,9 @@ public class Village extends GameState {
 	 
 	public void init() {
 		
-		tileMap = new Tile(30);
-		tileMap.loadTiles("/tilesets.grass.gif");
-		tileMap.loadMap("maps/village.map");
+		tileMap = new TileMap(30);
+		tileMap.loadTiles("/tilesets.villageTiles.png");
+		tileMap.loadMap("/maps/village.map");
 		tileMap.setPosition(0, 0);
 		
 	}
