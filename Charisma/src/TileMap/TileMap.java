@@ -20,7 +20,7 @@ public class TileMap {
 	private int xmax;
 	private int ymax;
 	
-	private double tween;
+	private double between;
 	
 	// map
 	private int[][] map;
@@ -58,7 +58,7 @@ public class TileMap {
 				subimage = tileset.getSubimage(col * tileSize,  0, tileSize, tileSize);
 				tiles[0][col] = new Tile(subimage, Tile.NORMAL);
 				subimage = tileset.getSubimage(col * tileSize, tileSize, tileSize, tileSize);
-				tiles[1][col] = new tiles(subimage, Tile.BLOCKED);
+				tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
 			}
 		}
 		catch(Exception e) {
@@ -112,6 +112,51 @@ public class TileMap {
 	}
 	public int getHeight() {
 		return height;
+	}
+	
+	public int getType (int row, int col) {
+		int rc = map[row][col];
+		int r = rc /numTilesAcross;
+		int c = rc % numTilesAcross;
+		return tiles [r][c].getType();
+	}
+	
+	public void setPosition(double x, double y) {
+		this.x += (x - this.x) * between;
+		this.y += (y - this.y) * between;
+		
+		fixBounds();
+		
+		colOffset = (int) -this.x / tileSize;
+		rowOffset = (int) -this.y/ tileSize;
+		
+	}
+	
+	private void fixBounds(){
+		if(x < xmin) x = xmin;
+		if(y < ymin) y = ymin;
+		if (x > xmax) x = xmax;
+		if (y > ymax) y = ymax;
+	}
+	
+	public void draw(Graphics2D g) {
+		for (int row = rowOffset; row < rowOffset + numRowsToDraw; row++) {
+			
+			if(row >= numRows) break;
+			
+			 for(int col < colOffset; col < colOffset + numColsToDraw; col++) {
+				 
+				 if(col >= numCols) break;
+				 
+				 if(map[row][col] == 0) continue;
+				 
+				 int rc = map[row][col];
+				 int r = rc/ numTilesAcross;
+				 int c = rc % numTilesAcross;
+				 
+				 g.drawImages(tiles)[r][c].getImage(), (int)x + col * tileSize, (int)y + row * tileSize, null);			 }
+			
+		}
 	}
 	
 	

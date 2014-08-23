@@ -17,6 +17,7 @@ public class MenuState extends GameState	{
 	
 	private Color titleColor;
 	private Font titleFont;
+
 	
 	private Font font;
 	
@@ -71,7 +72,7 @@ public class MenuState extends GameState	{
 	
 	private void select() {
 		if(currentChoice == 0) {
-			gsm.setState(GameStateManager(Village));
+//			gsm.setState(GameStateManager(Village));
 		}
 		
 		if (currentChoice == 1) {
