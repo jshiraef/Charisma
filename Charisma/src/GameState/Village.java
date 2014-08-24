@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import main.GamePanel;
 import Entity.Enemy;
+import Entity.Explosion;
 import Entity.HUD;
 import Entity.PixelThug;
 import Entity.Player;
@@ -22,6 +23,7 @@ public class Village extends GameState {
 	private Player player;
 	
 	private ArrayList<Enemy> enemies;
+	private ArrayList<Explosion> explosions;
 	
 	private HUD hud;
 	
@@ -49,6 +51,8 @@ public class Village extends GameState {
 		pt.setPosition(100, 100);
 		enemies.add(pt);
 		
+		explosions = new ArrayList<Explosion>();
+		
 		hud = new HUD(player);
 		
 	}
@@ -67,9 +71,20 @@ public class Village extends GameState {
 		
 		// enemies
 		for(int i = 0; i < enemies.size(); i++) {
-			enemies.get(i).update();
-			if(enemies.get(i).isDead()) {
+			Enemy e = enemies.get(i);
+			e.update();
+			if(e.isDead()) {
 				enemies.remove(i);
+				i--;
+				explosions.add(new Explosion(e.getx(), e.gety()));
+			}
+		}
+		
+		// explosion
+		for(int i = 0; i < explosions.size(); i++) {
+			explosions.get(i).update();
+			if(explosions.get(i).shouldRemove()) {
+				explosions.remove(i);
 				i--;
 			}
 		}
@@ -89,6 +104,11 @@ public class Village extends GameState {
 		// enemies
 		for(int i = 0; i < enemies.size(); i++ ) {
 			enemies.get(i).draw(g);
+		}
+		
+		// explosions
+		for(int i = 0; i < explosions.size(); i++) {
+			explosions.get(i).draw(g);
 		}
 		
 		// hud
