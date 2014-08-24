@@ -78,6 +78,12 @@ public class TileMap {
 			width = numCols * tileSize;
 			height = numRows * tileSize;
 			
+			xmin = GamePanel.WIDTH - width;
+			xmax = 0;
+			ymin = GamePanel.HEIGHT - height;
+			ymax = 0;
+			
+			
 			String delims = "\\s+";
 			for(int row = 0; row < numRows; row++) {
 				String line = br.readLine();
@@ -120,6 +126,8 @@ public class TileMap {
 		int c = rc % numTilesAcross;
 		return tiles [r][c].getType();
 	}
+	
+	public void setBetween(double d) { between = d; }
 	
 	public void setPosition(double x, double y) {
 		this.x += (x - this.x) * between;
