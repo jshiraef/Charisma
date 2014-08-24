@@ -139,6 +139,14 @@ public class TileMap {
 		if (y > ymax) y = ymax;
 	}
 	
+	public int getNumRows() {
+		return numRows;
+	}
+	
+	public int getNumCols() {
+		return numCols;
+	}
+	
 	public void draw(Graphics2D g) {
 		for (int row = rowOffset; row < rowOffset + numRowsToDraw; row++) {
 			
