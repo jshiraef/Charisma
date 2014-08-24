@@ -25,7 +25,7 @@ public class Player extends MapEntity{
 	private int charismaCost;
 	private int charismaEffectiveness;
 	
-//	private ArrayList<CharismaOrb> orbs;
+	private ArrayList<CharismaOrb> orbs;
 	
 	// swiping
 	private boolean swiping; 
@@ -70,7 +70,7 @@ public class Player extends MapEntity{
 		
 		charismaCost = 200;
 		charismaEffectiveness = 5;
-		// orbs = new ArrayList<CharismaOrb>();
+		orbs = new ArrayList<CharismaOrb>();
 		
 		swipeDamage = 8;
 		swipeRange = 40;
@@ -84,13 +84,14 @@ public class Player extends MapEntity{
 			 
 			 for (int i = 0; i < 7; i++) {
 				 BufferedImage[] bi = new BufferedImage[numFrames[i]];
+				 
 				 for (int j = 0; j < numFrames[i]; j++) {
 					 
-					 if(i != 6) {
+					 if(i != SWIPING) {
 					 bi[j] = spritesheet.getSubimage(j * width, i * height, width, height);
 					 }
 					 else {  
-						 bi[j] = spritesheet.getSubimage(j * width * 2, i * height, width, height);
+						 bi[j] = spritesheet.getSubimage(j * width * 2, i * height, width * 2, height);
 					 }
 				 
 				 	}
@@ -200,6 +201,41 @@ public class Player extends MapEntity{
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
+		// Check if the attack has stopped
+		if(currentAction == SWIPING) {
+			if(animation.hasPlayedOnce())
+				swiping = false;
+		}
+		
+		
+		if(currentAction == FIRING) {
+			if(animation.hasPlayedOnce())
+				firing = false;
+		}
+		
+		// attack
+		charisma += 1;
+		if(charisma > maxCharisma)
+			charisma = maxCharisma;
+		if(firing && currentAction != FIRING) {
+			if(charisma > charismaCost) {
+				charisma -= charismaCost;
+				CharismaOrb co = new CharismaOrb (tileMap, facingRight); 
+				co.setPosition(x, y);
+				orbs.add(co);
+				
+			}
+		}
+		
+		// update orbs
+		for (int i = 0; i < orbs.size(); i++) {
+			orbs.get(i).update();
+			if(orbs.get(i).shouldRemove()) {
+				orbs.remove(i);
+				i--;
+			}
+		}
+		
 		// set animation
 		if(swiping) {
 			if(currentAction != SWIPING) {
@@ -268,6 +304,13 @@ public class Player extends MapEntity{
 	
 	public void draw(Graphics2D g) {
 		setMapPosition();
+		
+		// draw orbs
+		for (int i = 0; i < orbs.size(); i++) {
+			orbs.get(i).draw(g);
+			
+		}
+		
 		 
 		// draw Player
 		

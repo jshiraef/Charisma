@@ -12,8 +12,8 @@ public class Animation {
 	
 	private boolean playedOnce;
 	
-	public void Animation() {
-		
+	public  Animation() {
+		playedOnce = false;
 	}
 	
 	public void setFrames(BufferedImage[] frames) {
