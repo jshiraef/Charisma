@@ -20,7 +20,7 @@ public class TileMap {
 	private int xmax;
 	private int ymax;
 	
-	private double between;
+	private double cameraTweaker;
 	
 	// map
 	private int[][] map;
@@ -105,11 +105,11 @@ public class TileMap {
 		return tileSize;
 	}
 	
-	public int getX() {
-		return (int) x;
+	public double getX() {
+		return x;
 	}
 	
-	public int getY() {
+	public double getY() {
 		return (int) y;
 	}
 	
@@ -127,11 +127,11 @@ public class TileMap {
 		return tiles [r][c].getType();
 	}
 	
-	public void setBetween(double d) { between = d; }
+	public void setCameraTweaker(double d) { cameraTweaker = d; }
 	
 	public void setPosition(double x, double y) {
-		this.x += (x - this.x) * between;
-		this.y += (y - this.y) * between;
+		this.x += (x - this.x) * cameraTweaker;
+		this.y += (y - this.y) * cameraTweaker;
 		
 		fixBounds();
 		

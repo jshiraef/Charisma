@@ -3,8 +3,11 @@ package GameState;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import main.GamePanel;
+import Entity.Enemy;
+import Entity.PixelThug;
 import Entity.Player;
 import TileMap.BackGround;
 import TileMap.TileMap;
@@ -17,6 +20,8 @@ public class Village extends GameState {
 	
 	private Player player;
 	
+	private ArrayList<Enemy> enemies;
+	
 	public Village (GameStateManager gsm) {
 		this.gsm = gsm;
 		init();
@@ -28,12 +33,18 @@ public class Village extends GameState {
 		tileMap.loadTiles("/tilesets/VillageTiles.png");
 		tileMap.loadMap("/maps/village.map");
 		tileMap.setPosition(0, 0);
-		tileMap.setBetween(1);
+		tileMap.setCameraTweaker(0.07);
 		
 		bg = new BackGround("/Backgrounds/grass.png", 0.1);
 		
 		player = new Player(tileMap);
 		player.setPosition(100, 100);
+		
+		enemies = new ArrayList<Enemy>();
+		PixelThug pt;
+		pt = new PixelThug(tileMap);
+		pt.setPosition(100, 100);
+		enemies.add(pt);
 		
 	}
 	
@@ -41,6 +52,15 @@ public class Village extends GameState {
 		// update player
 		player.update();
 		tileMap.setPosition(GamePanel.WIDTH/ 2 - player.getx(), GamePanel.HEIGHT/2 - player.gety() );
+		
+		// background setup
+		
+		bg.setPosition(tileMap.getX(), tileMap.getY());
+		
+		// enemies
+		for(int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).update();
+		}
 	}
 	public void draw (Graphics2D g) {
 		
@@ -52,6 +72,11 @@ public class Village extends GameState {
 		
 		// draw player
 		player.draw(g);
+		
+		// enemies
+		for(int i = 0; i < enemies.size(); i++ ) {
+			enemies.get(i).draw(g);
+		}
 		
 	}
 	public void keyPressed(int k) {

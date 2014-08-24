@@ -17,8 +17,8 @@ public class Player extends MapEntity{
 	private int maxCharisma;
 	
 	private boolean dead;
-	private boolean flinching;
-	private long flinchTimer;
+	private boolean blinking;
+	private long blinkTimer;
 	
 	// fireball
 	private boolean firing; 
@@ -281,7 +281,7 @@ public class Player extends MapEntity{
 			if(currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(400);
+				animation.setDelay(100);
 				width = 30;
 			}
 		}
@@ -314,20 +314,15 @@ public class Player extends MapEntity{
 		 
 		// draw Player
 		
-		if (flinching) {
-			long elapsed = (System.nanoTime() - flinchTimer)/ 1000000;
+		if (blinking) {
+			long elapsed = (System.nanoTime() - blinkTimer)/ 1000000;
 			if(elapsed / 100 % 2 == 0) {
 				return;
 				
 			}
 		}
 		
-		if(facingRight) {
-			g.drawImage(animation.getImage(), (int) (x + xmap - width/ 2), (int) (y + ymap - height/2), null);	
-		}
-		else {
-			g.drawImage(animation.getImage(), (int)	(x + xmap - width/2 + width), (int) (y + ymap - height/2), -width, height, null);
-		}
+		super.draw(g);
 	}
 
 }
