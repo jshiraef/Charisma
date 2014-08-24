@@ -31,7 +31,7 @@ public class Enemy extends MapEntity {
 			return;
 		
 		health -= damage;
-		if(health == 0)
+		if(health <= 0)
 			dead = true;
 		
 		blinking = true;

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import main.GamePanel;
 import Entity.Enemy;
+import Entity.HUD;
 import Entity.PixelThug;
 import Entity.Player;
 import TileMap.BackGround;
@@ -21,6 +22,8 @@ public class Village extends GameState {
 	private Player player;
 	
 	private ArrayList<Enemy> enemies;
+	
+	private HUD hud;
 	
 	public Village (GameStateManager gsm) {
 		this.gsm = gsm;
@@ -46,6 +49,8 @@ public class Village extends GameState {
 		pt.setPosition(100, 100);
 		enemies.add(pt);
 		
+		hud = new HUD(player);
+		
 	}
 	
 	public void update() {
@@ -57,10 +62,18 @@ public class Village extends GameState {
 		
 		bg.setPosition(tileMap.getX(), tileMap.getY());
 		
+		// attacking
+		player.checkAttack(enemies);
+		
 		// enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
+			if(enemies.get(i).isDead()) {
+				enemies.remove(i);
+				i--;
+			}
 		}
+
 	}
 	public void draw (Graphics2D g) {
 		
@@ -77,6 +90,9 @@ public class Village extends GameState {
 		for(int i = 0; i < enemies.size(); i++ ) {
 			enemies.get(i).draw(g);
 		}
+		
+		// hud
+		hud.draw(g);
 		
 	}
 	public void keyPressed(int k) {

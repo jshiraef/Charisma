@@ -20,10 +20,11 @@ public class Player extends MapEntity{
 	private boolean blinking;
 	private long blinkTimer;
 	
-	// fireball
+	// orb
 	private boolean firing; 
 	private int charismaCost;
 	private int charismaEffectiveness;
+	private int orbDamage;
 	
 	private ArrayList<CharismaOrb> orbs;
 	
@@ -71,6 +72,7 @@ public class Player extends MapEntity{
 		charismaCost = 200;
 		charismaEffectiveness = 5;
 		orbs = new ArrayList<CharismaOrb>();
+		
 		
 		swipeDamage = 8;
 		swipeRange = 40;
@@ -138,6 +140,38 @@ public class Player extends MapEntity{
 	
 	public void setHovering(boolean b) {
 		hovering = b;
+	}
+	
+	public void checkAttack(ArrayList<Enemy> enemies) {
+		
+		
+		// loop through enemies
+		for(int i = 0; i < enemies.size(); i++) {
+			Enemy e = enemies.get(i);
+			
+			if(swiping) {
+				if(facingRight) {
+					if( e.getx() > x && e.getx() < x + swipeRange && e.gety() > y - height / 2 && e.gety() < y + height/ 2) {
+						e.hit(swipeDamage);
+					}
+				}
+				else {
+					if( e.getx() > x && e.getx() < x + swipeRange && e.gety() > y - height / 2 && e.gety() < y + height/ 2) {
+						e.hit(swipeDamage);
+					}
+				}
+			}
+		
+			// orbs
+			for(int j = 0; j < orbs.size(); j++) {
+				if(orbs.get(j).intersects(e)) {
+					e.hit(charismaEffectiveness);
+					orbs.get(j).setHit();
+					break;
+				}
+			}
+		
+		}
 	}
 	
 	private void getNextPosition() {
