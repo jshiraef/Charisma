@@ -171,7 +171,28 @@ public class Player extends MapEntity{
 				}
 			}
 		
+			// check for enemy collision
+			if(intersects(e)) {
+				hit(e.getDamage());
+			}
+			
 		}
+		
+	}
+	
+	private void hit(int damage) {
+		if(blinking) 
+			return;
+		health -= damage;
+		
+		if(health < 0)
+			health = 0;
+		
+		if(health == 0) 
+			dead = true;
+		
+		blinking = true;
+		blinkTimer = System.nanoTime();
 	}
 	
 	private void getNextPosition() {
@@ -267,6 +288,14 @@ public class Player extends MapEntity{
 			if(orbs.get(i).shouldRemove()) {
 				orbs.remove(i);
 				i--;
+			}
+		}
+		
+		// check done blinking
+		if(blinking) {
+			long elapsed = (System.nanoTime() - blinkTimer) / 1000000;
+			if(elapsed > 1000) {
+				blinking = false;
 			}
 		}
 		

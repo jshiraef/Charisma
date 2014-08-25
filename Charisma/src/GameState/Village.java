@@ -2,6 +2,7 @@ package GameState;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -45,15 +46,31 @@ public class Village extends GameState {
 		player = new Player(tileMap);
 		player.setPosition(100, 100);
 		
-		enemies = new ArrayList<Enemy>();
-		PixelThug pt;
-		pt = new PixelThug(tileMap);
-		pt.setPosition(100, 100);
-		enemies.add(pt);
+		populateEnemies();
+		
+		
 		
 		explosions = new ArrayList<Explosion>();
 		
 		hud = new HUD(player);
+		
+	}
+	
+	private void populateEnemies() {
+		enemies = new ArrayList<Enemy>();
+		
+		PixelThug pt;
+		Point[] points = new Point[] {new Point(200, 100), new Point(860, 200), new Point(1525, 200), new Point(1680, 200), new Point(1800, 200)	};
+		
+		for(int i = 0; i < points.length; i++) {
+			pt = new PixelThug(tileMap);
+			pt.setPosition(points[i].x, points[i].y);
+			enemies.add(pt);
+		}
+		
+		pt = new PixelThug(tileMap);
+		pt.setPosition(860, 200);
+		
 		
 	}
 	
@@ -108,6 +125,7 @@ public class Village extends GameState {
 		
 		// explosions
 		for(int i = 0; i < explosions.size(); i++) {
+			explosions.get(i).setMapPosition((int)tileMap.getX(), (int)tileMap.getY());
 			explosions.get(i).draw(g);
 		}
 		
