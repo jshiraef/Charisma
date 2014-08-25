@@ -29,7 +29,7 @@ public class Explosion {
 		
 		try {
 			
-			BufferedImage spritesheet = ImageIO. read(getClass().getResourceAsStream("/Sprites/Enemies/explosion.png"));
+			BufferedImage spritesheet = ImageIO. read(getClass().getResourceAsStream("/sprites/Enemies/explosion.png"));
 			
 			sprites = new BufferedImage[6];
 			for(int i = 0; i < sprites.length; i++) {

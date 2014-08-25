@@ -117,9 +117,9 @@ public class Player extends MapEntity{
 		 animation.setDelay(400);
 		 
 		 sfx = new HashMap<String, AudioPlayer>();
-		 sfx.put("jump", new AudioPlayer("/sound/sfx/jump.wav"));
-		 sfx.put("swipe", new AudioPlayer("/sound/sfx/swipe.wav"));
-		 sfx.put("shoot", new AudioPlayer("/sound/sfx/shoot.wav"));
+		 sfx.put("jump", new AudioPlayer("/sound/sfx/jump.mp3"));
+		 sfx.put("swipe", new AudioPlayer("/sound/sfx/swipe.mp3"));
+		 sfx.put("shoot", new AudioPlayer("/sound/sfx/shoot.mp3"));
 		 
 	}
 	
