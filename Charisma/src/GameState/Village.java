@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import Audio.AudioPlayer;
 
 import main.GamePanel;
 import Entity.Enemy;
@@ -20,6 +21,8 @@ public class Village extends GameState {
 	
 	private TileMap tileMap;
 	private BackGround bg;
+	
+	private AudioPlayer bgMusic;
 	
 	private Player player;
 	
@@ -54,13 +57,17 @@ public class Village extends GameState {
 		
 		hud = new HUD(player);
 		
+		bgMusic = new AudioPlayer("/sound/music/village.mp3");
+		bgMusic.play();
+		bgMusic.setVolume(-20.0f); // Reduce Volume by 10 decibels
+		
 	}
 	
 	private void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
 		
 		PixelThug pt;
-		Point[] points = new Point[] {new Point(200, 100), new Point(860, 200), new Point(1525, 200), new Point(1680, 200), new Point(1800, 200)	};
+		Point[] points = new Point[] {new Point(200, 100), new Point(860, 200), new Point(1525, 200), new Point(1680, 200), new Point(1800, 200), new Point(2700, 200), new Point(2720, 200), new Point(2740, 200)};
 		
 		for(int i = 0; i < points.length; i++) {
 			pt = new PixelThug(tileMap);

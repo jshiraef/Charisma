@@ -41,21 +41,17 @@ public class GameStateManager {
 	}
 	
 	public void update() {
-		try {
+		
+		if(!(gameStates[currentState] == null))
 		gameStates[currentState].update();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	public void draw(java.awt.Graphics2D g) {
-		try {
+		
+		if(!(gameStates[currentState] == null))
 			gameStates[currentState].draw(g);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+			
 	}
 	
 	public void keyPressed(int k) {

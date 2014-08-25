@@ -3,9 +3,11 @@ package Entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import Audio.AudioPlayer;
 import TileMap.TileMap;
 
 public class Player extends MapEntity{
@@ -48,6 +50,8 @@ public class Player extends MapEntity{
 	private static final int HOVERING = 4;
 	private static final int FIRING = 5;
 	private static final int SWIPING = 6;
+	
+	private HashMap<String, AudioPlayer> sfx;
 	
 	public Player (TileMap tm) {
 		super (tm);
@@ -111,7 +115,15 @@ public class Player extends MapEntity{
 		 currentAction = IDLE;
 		 animation.setFrames(sprites.get(IDLE));
 		 animation.setDelay(400);
+		 
+		 sfx = new HashMap<String, AudioPlayer>();
+		 sfx.put("jump", new AudioPlayer("/sound/sfx/jump.wav"));
+		 sfx.put("swipe", new AudioPlayer("/sound/sfx/swipe.wav"));
+		 sfx.put("shoot", new AudioPlayer("/sound/sfx/shoot.wav"));
+		 
 	}
+	
+	
 	
 	
 	public int getHealth() {
@@ -231,6 +243,7 @@ public class Player extends MapEntity{
 		
 		// jumping
 		if(jumping && !falling) {
+			sfx.get("jump").play();
 			dy = jumpStart;
 			falling = true;
 		}
@@ -302,6 +315,7 @@ public class Player extends MapEntity{
 		// set animation
 		if(swiping) {
 			if(currentAction != SWIPING) {
+				sfx.get("swipe").play();
 				currentAction = SWIPING;
 				animation.setFrames(sprites.get(SWIPING));
 				animation.setDelay(50);
@@ -311,6 +325,7 @@ public class Player extends MapEntity{
 		else if(firing) {
 			if(currentAction != FIRING) {
 				currentAction = FIRING;
+				sfx.get("shoot").play();
 				animation.setFrames(sprites.get(FIRING));
 				animation.setDelay(100);
 				width = 30;
