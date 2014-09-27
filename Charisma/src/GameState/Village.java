@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import Audio.AudioPlayer;
 
+import Audio.AudioPlayer;
 import main.GamePanel;
 import Entity.Enemy;
 import Entity.Explosion;
@@ -31,6 +31,8 @@ public class Village extends GameState {
 	
 	private HUD hud;
 	
+	public static boolean FirstLevelConquered;
+	
 	public Village (GameStateManager gsm) {
 		this.gsm = gsm;
 		init();
@@ -44,7 +46,8 @@ public class Village extends GameState {
 		tileMap.setPosition(0, 0);
 		tileMap.setCameraTweaker(0.07);
 		
-		bg = new BackGround("/Backgrounds/grass.png", 0.1);
+		bg = new BackGround("/Backgrounds/grass.png", 0.0);
+		FirstLevelConquered = false;
 		
 		player = new Player(tileMap);
 		player.setPosition(100, 100);
@@ -93,6 +96,8 @@ public class Village extends GameState {
 		// attacking
 		player.checkAttack(enemies);
 		
+		System.out.println(" the player's x & y are: " + player.getx() + " , " + player.gety());
+		
 		// enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
@@ -111,6 +116,20 @@ public class Village extends GameState {
 				explosions.remove(i);
 				i--;
 			}
+		}
+		
+		if(player.gety() > 400 || player.getHealth() <= 0)
+		{
+			gsm.setState(GameStateManager.GAMEOVER);
+			bgMusic.stop();
+		}
+		
+		if(player.getx() > 2900)
+		{
+			FirstLevelConquered = true;
+			gsm.setState(GameStateManager.GAMEOVER);
+			bgMusic.stop();
+			bgMusic.play();
 		}
 
 	}

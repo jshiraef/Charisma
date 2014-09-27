@@ -403,4 +403,5 @@ public class Player extends MapEntity{
 		super.draw(g);
 	}
 
+
 }

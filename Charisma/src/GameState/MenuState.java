@@ -18,12 +18,12 @@ public class MenuState extends GameState	{
 	private Color titleColor;
 	private Font titleFont;
 
-	
 	private Font font;
 	
 	
 	public MenuState(GameStateManager gsm) {
 		this.gsm = gsm;
+		init();
 		
 		try{
 			bg = new BackGround("/Backgrounds/menubg.gif", 1);
@@ -74,10 +74,6 @@ public class MenuState extends GameState	{
 	private void select() {
 		if(currentChoice == 0) {
 			gsm.setState(GameStateManager.VILLAGE);
-		}
-		
-		if (currentChoice == 1) {
-			// help
 		}
 		
 		if (currentChoice == 2) {

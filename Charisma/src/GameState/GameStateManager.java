@@ -7,15 +7,15 @@ public class GameStateManager {
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 2;
+	public static final int NUMGAMESTATES = 4;
 	public static final int MENUSTATE = 0;
 	public static final int VILLAGE = 1;
+	public static final int FUNZONE = 2;
+	public static final int GAMEOVER = 3;
 	
 	public GameStateManager() {
 		
 		gameStates = new GameState[NUMGAMESTATES];
-		
-		
 		
 		currentState = MENUSTATE;
 		loadState(currentState);
@@ -23,6 +23,8 @@ public class GameStateManager {
 	}
 	
 	private void loadState(int state) {
+		if(state == GAMEOVER)
+			gameStates[state] = new GameOver(this);
 		if(state == MENUSTATE)
 			gameStates[state] = new MenuState(this);
 		if(state == VILLAGE)
