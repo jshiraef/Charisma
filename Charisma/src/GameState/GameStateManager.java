@@ -29,6 +29,8 @@ public class GameStateManager {
 			gameStates[state] = new MenuState(this);
 		if(state == VILLAGE)
 			gameStates[state] = new Village(this);
+		if(state == FUNZONE) 
+			gameStates[state] = new FunZone(this);
 	}
 	
 	private void unloadState(int state) {

@@ -127,7 +127,8 @@ public class Village extends GameState {
 		if(player.getx() > 2900)
 		{
 			FirstLevelConquered = true;
-			gsm.setState(GameStateManager.GAMEOVER);
+			gsm.setState(GameStateManager.FUNZONE);
+//			gsm.setState(GameStateManager.GAMEOVER);
 			bgMusic.stop();
 			bgMusic.play();
 		}
